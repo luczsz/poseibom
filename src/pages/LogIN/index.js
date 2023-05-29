@@ -1,15 +1,37 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity } from 'react-native';
 
 import { styles } from './style';
 import { Feather } from '@expo/vector-icons';
 import { theme } from '../../global/theme';
 
+import { AuthContext } from '../../contexts/auth';
 import { useNavigation } from '@react-navigation/native';
 
 export default function LogIN() {
-
+  
   const navigation = useNavigation();
+  const { singIn } = useContext(AuthContext);
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const [mensage, setMensage] = useState('');
+
+  function entrar(){
+    if(email == ''){
+      setMensage('Você precisa adicionar um email');
+        return
+    }{
+      if(senha == ''){
+        setMensage('Escolha uma senha');
+        return
+      }{
+        singIn(email, senha)
+      }
+    }
+  };
+
 
  return (
    <KeyboardAvoidingView style={styles.container} >
@@ -33,7 +55,11 @@ export default function LogIN() {
               />
               <TextInput      
                 style={{ width: '85%', height: 50  }}
-                placeholder='Email'
+                placeholder='Seu email'
+                autoCapitalize='none'
+                autoCorrect={false}
+                value={email}
+                onChangeText={ (text) => setEmail(text)}
               />
           </View>
 
@@ -46,7 +72,12 @@ export default function LogIN() {
               />
               <TextInput      
                 style={{ width: '85%', height: 50  }}
-                placeholder='Senha'
+                placeholder='Sua senha'
+                keyboardType={'numeric'}
+                secureTextEntry={true}
+                autoCapitalize='none'
+                autoCorrect={false}
+                onChangeText={ (text) => setSenha(text)}
               />
           </View>
 
@@ -61,6 +92,7 @@ export default function LogIN() {
           <View style={styles.submitView} >
               <TouchableOpacity 
                 style={styles.submit}
+                onPress={ () => entrar()}
               >
                   <Text style={styles.submitText} >E N T R A R</Text>
               </TouchableOpacity>

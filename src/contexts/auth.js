@@ -28,7 +28,7 @@ export default function AuthProvaider({children}){
         );
       });
     
-    //Verificando ID
+    //Verificando ID 
     useEffect( () => {
         
         function verificar(){
@@ -57,6 +57,35 @@ export default function AuthProvaider({children}){
     
 
     //Logando um usuario
+    function singIn(email, senha){
+      db.transaction(tx => {
+        tx.executeSql(
+          'SELECT * FROM users WHERE email = ? AND senha = ? LIMIT 1;',
+          [email, senha],
+          (_, { rows }) => {
+            if (rows.length > 0) {
+              const user = rows.item(0);
+              
+              let data = {
+                nome: user.nome,
+                email: user.email,
+                senha: user.senha,
+                id: user.id,
+              }
+              
+              setLoadingAuth(true);
+              setUser(data);
+            } else {
+              alert('Erro ao logar')
+              //console.log(new Error('Credenciais inválidas'));
+            }
+          },
+          (_, error) => {
+            console.log(error);
+          }
+        );
+      });
+    }
 
     //Criando um usuario
     function singUp(nome, email, senha){
@@ -93,7 +122,7 @@ export default function AuthProvaider({children}){
     // Dados Ofiline
 
     return(
-        <AuthContext.Provider value={{ signed: !!user, user, singUp, loadingAuth }} >
+        <AuthContext.Provider value={{ signed: !!user, user, singUp, singIn, loadingAuth }} >
             {children}
         </AuthContext.Provider>
     )
