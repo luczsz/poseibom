@@ -1,15 +1,43 @@
-import React from 'react';
-import { View, Text, KeyboardAvoidingView, TouchableOpacity, TextInput } from 'react-native';
+import React, {useState, useContext} from 'react';
+import { View, Text, KeyboardAvoidingView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 
 import { styles } from './style';
 import { Feather } from '@expo/vector-icons';
 import { theme } from '../../global/theme';
 
+import { AuthContext } from '../../contexts/auth';
 import { useNavigation } from '@react-navigation/native';
 
 export default function LogON() {
   
   const navigation = useNavigation();
+  const { singUp, loadingAuth } = useContext(AuthContext);
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [nome, setNome] = useState('');
+
+  const [mensage, setMensage] = useState('');
+
+  function cadastar(){
+
+    if(nome == ''){
+      setMensage('Você precisa Adicionar um nome');
+      return
+    }{
+      if(email == ''){
+        setMensage('Você precisa adicionar um email');
+        return
+      }{
+        if(senha == ''){
+          setMensage('Escolha uma senha');
+          return
+        }{
+          singUp(nome, email, senha);
+        }
+      }
+    }
+  }
   
   return (
    <KeyboardAvoidingView style={styles.container}>
@@ -40,7 +68,11 @@ export default function LogON() {
                   />
                   <TextInput      
                     style={{ width: '85%', height: 50  }}
-                    placeholder='Nome'
+                    placeholder='Seu nome'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    value={nome}
+                    onChangeText={ (text)=> setNome(text)}
                   />
             </View>
 
@@ -53,7 +85,11 @@ export default function LogON() {
                   />
                   <TextInput      
                     style={{ width: '85%', height: 50  }}
-                    placeholder='Email'
+                    placeholder='Seu email'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    value={email}
+                    onChangeText={ (text) => setEmail(text)}
                   />
             </View>
             
@@ -66,9 +102,17 @@ export default function LogON() {
                   />
                   <TextInput      
                     style={{ width: '85%', height: 50  }}
-                    placeholder='Senha'
+                    placeholder='Sua senha'
+                    keyboardType={'numeric'}
+                    secureTextEntry={true}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    onChangeText={ (text) => setSenha(text)}
                   />
             </View>
+            <Text style={{ color: theme.colors.teste3, fontSize: 16, fontWeight: 'bold' }} >
+              {mensage}
+            </Text>
 
 
         </View>
@@ -76,8 +120,15 @@ export default function LogON() {
             <View style={styles.submitView} >
               <TouchableOpacity
                 style={styles.submit}
+                onPress={ () => cadastar()}
               >
-                  <Text style={styles.submitText} >C A D A S T R A R</Text>
+
+                {loadingAuth ? 
+                    <ActivityIndicator size={22} color={theme.colors.teste3} />
+                  :                
+                <Text style={styles.submitText} >C A D A S T R A R</Text>
+                }
+
               </TouchableOpacity>
             </View>
 

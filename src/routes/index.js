@@ -1,16 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, ActivityIndicator } from 'react-native';
 
-// importar aqui o auth contexto
+import { AuthContext } from "../contexts/auth";
 
 import AuthRoutes from "./auth.routes";
-// importar aqui as rotas do app
+import AppRoutes from "./app.routes";
 
 export default function Routes(){
-    // importar aqui o SINGNED e o LOADING
+    const { signed } = useContext(AuthContext);
 
-    // criar uma verificação com o loding
     return(
-        <AuthRoutes/>
+            signed ? <AppRoutes/> : <AuthRoutes />
     )
 }
