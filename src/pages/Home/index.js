@@ -5,6 +5,10 @@ import { AuthContext } from '../../contexts/auth';
 
 import { styles } from './style';
 import { Feather } from '@expo/vector-icons';
+import { theme } from '../../global/theme';
+
+import { peixes } from '../../components/list';
+import Itens from '../../components/Itens';
 
 export default function Home() {
 
@@ -29,16 +33,22 @@ export default function Home() {
               <TouchableOpacity
                 style={styles.account}
               >
-                <Feather name='user' size={20} color={'white'} />
+                <Feather name='user' size={25} color={theme.colors.primary} />
 
               </TouchableOpacity>
 
             </View>
           
         </View>
-
+        
         <View style={styles.content} >
-          <Text>HOME  AGAIN</Text>
+
+          <Text style={{ color: theme.colors.teste3, fontSize: 18, fontWeight: 'bold', marginBottom: 10, textAlign: 'left', width: '100%' }} >
+            Escolha seu produto: 
+          </Text>  
+          {peixes.map( (itens) => (
+            <Itens key={itens.id} data={itens} />
+          ))}
 
         </View>
         

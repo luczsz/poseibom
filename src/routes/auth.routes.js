@@ -6,6 +6,8 @@ import Splash from '../pages/Splash';
 import LogON from '../pages/LogON';
 import LogIN from '../pages/LogIN';
 
+import Home from '../pages/Home';
+
 const AuthStack = createNativeStackNavigator();
 
 export default function AuthRoutes(){
