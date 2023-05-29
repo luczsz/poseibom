@@ -12,8 +12,9 @@ export const styles = StyleSheet.create({
 
     header:{
         width: '100%',
-        height: 65,
+        height: 95,
         flexDirection: 'row',
+        borderRadius: 12,
         
         borderBottomWidth: 2,
         borderColor: theme.colors.teste3,
@@ -24,6 +25,13 @@ export const styles = StyleSheet.create({
         paddingLeft: 14,
         paddingRight: 14,
     },
+
+    names:{},
+    bntsHeader:{},
+    account:{},
+
+
+    
     content:{
         flex: 1,
         backgroundColor: 'red',
