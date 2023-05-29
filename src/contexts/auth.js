@@ -75,9 +75,10 @@ export default function AuthProvaider({children}){
               
               setLoadingAuth(true);
               setUser(data);
+              console.log(data);
             } else {
               alert('Erro ao logar')
-              //console.log(new Error('Credenciais inválidas'));
+              console.log(new Error('Credenciais inválidas'));
             }
           },
           (_, error) => {

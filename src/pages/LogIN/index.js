@@ -27,7 +27,7 @@ export default function LogIN() {
         setMensage('Escolha uma senha');
         return
       }{
-        singIn(email, senha)
+        singIn(email, senha);
       }
     }
   };
