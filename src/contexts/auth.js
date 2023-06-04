@@ -41,6 +41,7 @@ export default function AuthProvaider({children}){
                   var len = results.rows.length;
                   if(len > 0){
                     console.log('existem:' + results.rows.length + 'registros');
+                    console.log(results.rows);
                     setId( results.rows.length);
                   }
                   else{
